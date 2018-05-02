@@ -21,6 +21,8 @@
     "forge-apis": "^0.4.1"
   },
   "devDependencies": {
-    "nodemon": "^1.17.3"
+    "nodemon": "^1.17.3",
+    "css-loader": "^0.28.11",
+    "webpack": "^4.6.0"
   }
 }
