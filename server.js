@@ -1,0 +1,1 @@
+require('./src/back-end/server.js');
