@@ -9,7 +9,7 @@ function load(token) {
         env: 'AutodeskProduction',
         accessToken: token.access_token
     };
-
+    
     Autodesk.Viewing.Initializer(options, function onInitialized() {
         viewerApp = new Autodesk.Viewing.ViewingApplication('viewer');
         viewerApp.registerViewer(viewerApp.k3D, Autodesk.Viewing.Viewer3D);
