@@ -1,0 +1,22 @@
+{
+  "name": "preview-demo",
+  "version": "1.0.0",
+  "description": "preview-demo",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mrnexeon/preview-demo.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mrnexeon/preview-demo/issues"
+  },
+  "homepage": "https://github.com/mrnexeon/preview-demo#readme",
+  "dependencies": {
+    "express": "^4.16.3"
+  }
+}
