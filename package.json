@@ -18,5 +18,9 @@
   "homepage": "https://github.com/mrnexeon/preview-demo#readme",
   "dependencies": {
     "express": "^4.16.3"
+  },
+  "devDependencies": {
+    "css-loader": "^0.28.11",
+    "webpack": "^4.6.0"
   }
 }
