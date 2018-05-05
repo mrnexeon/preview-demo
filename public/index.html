@@ -1,14 +1,17 @@
 <!DOCTYPE html>
 
-<head>
-  <!-- Meta -->
-  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1, user-scalable=no" />
-  <meta charset="utf-8">
+<h1>Inside frame</h1>
+<div id="viewer">
 
-  <title>Preview Demo</title>
-</head>
+<!-- jQuery -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
-<iframe src="./build/index.html">
+<!-- Autodesk -->
+<script defer src="https://use.fontawesome.com/releases/v5.0.9/js/all.js" integrity="sha384-8iPTk2s/jMVj81dnzb/iFR2sdA7u06vHJyyLlAd4snFpCl/SnyUjRrbdJsw1pGIl"
+  crossorigin="anonymous"></script>
+<script src="https://developer.api.autodesk.com/modelderivative/v2/viewers/three.min.js"></script>
+<script src="https://developer.api.autodesk.com/modelderivative/v2/viewers/viewer3D.min.js"></script>
 
-    <!-- Scripts -->
-<script src="main.js"></script>
+
+<!-- Webpack -->
+<script src="bundle.js"></script>
