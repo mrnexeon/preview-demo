@@ -1,17 +1,43 @@
-<!DOCTYPE html>
+<DOCTYPE! html>
 
-<h1>Inside frame</h1>
-<div id="viewer">
+    <title>Preview Demo</title>
 
-<!-- jQuery -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <!-- Style -->
+    <link rel="stylesheet" href="style.css">
 
-<!-- Autodesk -->
-<script defer src="https://use.fontawesome.com/releases/v5.0.9/js/all.js" integrity="sha384-8iPTk2s/jMVj81dnzb/iFR2sdA7u06vHJyyLlAd4snFpCl/SnyUjRrbdJsw1pGIl"
-  crossorigin="anonymous"></script>
-<script src="https://developer.api.autodesk.com/modelderivative/v2/viewers/three.min.js"></script>
-<script src="https://developer.api.autodesk.com/modelderivative/v2/viewers/viewer3D.min.js"></script>
+    <body>
+        <ul class="cart-list">
+            <li class="cart-item">
+                <span class="name">Партер Ряд 3 Место 1</span>
+                <span class="price">1600 Руб.</span>
+                <button name="preview">Посмотреть</button>
+                <button name="remove">Убрать</button>
+            </li>
+            <li class="cart-item">
+                <span class="name">Партер Ряд 3 Место 2</span>
+                <span class="price">1600 Руб.</span>
+                <button name="preview">Посмотреть</button>
+                <button name="remove">Убрать</button>
+            </li>
+            <li class="cart-item">
+                <span class="name">Партер Ряд 3 Место 3</span>
+                <span class="price">1600 Руб.</span>
+                <button name="preview">Посмотреть</button>
+                <button name="remove">Убрать</button>
+            </li>
+        </ul>
+        
+        <form>
+            <span>Сумма: 3200 Руб.</span>
+            <button type="submit">Оплатить</button>
+        </form>
 
+        <iframe src="build/index.html">
+    </body>
 
-<!-- Webpack -->
-<script src="bundle.js"></script>
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+        crossorigin="anonymous"></script>
+
+    <!-- Scripts -->
+    <script src="script.js"></script>
