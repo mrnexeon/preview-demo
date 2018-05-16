@@ -39,14 +39,16 @@ form {
 
 button {
     border: none;
-    padding: 8px 12px;
-    color: white;
-    border-radius: 2px;
 }
 
 button:hover {
     opacity: .9;
     cursor: pointer;
+}
+
+.btn-remove, .btn-preview, .btn-pay {
+    padding: 8px 12px;
+    color: white; 
 }
 
 .btn-remove {
@@ -61,7 +63,26 @@ button:hover {
     background: deepskyblue;
 }
 
-.modal {
+.modal-content {
+    position: relative;
+    margin: 0 auto;
+    width: 63%;
+    height: 63%;
+}
+
+.btn-close {
+    position: absolute;
+    right: 0;
+    top: 0;
+    background: rgb(255, 64, 64);
+    font-size: 1.3em;
+    vertical-align: middle;
+    color: white;
+    height: 42px;
+    width: 42px;
+}
+
+#modal {
     position: fixed; /* Stay in place */
     z-index: 1; /* Sit on top */
     left: 0;
@@ -72,8 +93,5 @@ button:hover {
     background: rgba(0, 0, 0, .8);
     display: none;
     align-items: center;
-}
 
-.modal-content {
-    margin: 0 auto;
 }

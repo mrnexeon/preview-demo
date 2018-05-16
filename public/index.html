@@ -5,11 +5,6 @@
 
         <!-- Style -->
         <link rel="stylesheet" href="style.css">
-        <!-- jQuery -->
-        <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-            crossorigin="anonymous"></script>
-        <!-- Scripts -->
-        <script src="script.js"></script>
     </head>
 
     <body>
@@ -39,11 +34,17 @@
                 <span>Сумма: 4500 Руб.</span>
                 <button class="btn-pay" style="margin-left: 8px" type="submit">Оплатить</button>
             </form>
-            <div class="modal">
+            <div id="modal">
                 <div class="modal-content">
                     <button class="btn-close">&times;</button>
-                    <iframe src="build/index.html" width="500px" height="500px">
                 </div>
             </div>
         </main>
+        
+        <!-- jQuery -->
+        <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+            crossorigin="anonymous"></script>
+        <!-- Scripts -->
+        <script src="script.js"></script>
+
     </body>
