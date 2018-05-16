@@ -1,43 +1,49 @@
 <DOCTYPE! html>
 
-    <title>Preview Demo</title>
+    <head>
+        <title>Preview Demo</title>
 
-    <!-- Style -->
-    <link rel="stylesheet" href="style.css">
+        <!-- Style -->
+        <link rel="stylesheet" href="style.css">
+        <!-- jQuery -->
+        <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+            crossorigin="anonymous"></script>
+        <!-- Scripts -->
+        <script src="script.js"></script>
+    </head>
 
     <body>
-        <ul class="cart-list">
-            <li class="cart-item">
-                <span class="name">Партер Ряд 3 Место 1</span>
-                <span class="price">1600 Руб.</span>
-                <button name="preview">Посмотреть</button>
-                <button name="remove">Убрать</button>
-            </li>
-            <li class="cart-item">
-                <span class="name">Партер Ряд 3 Место 2</span>
-                <span class="price">1600 Руб.</span>
-                <button name="preview">Посмотреть</button>
-                <button name="remove">Убрать</button>
-            </li>
-            <li class="cart-item">
-                <span class="name">Партер Ряд 3 Место 3</span>
-                <span class="price">1600 Руб.</span>
-                <button name="preview">Посмотреть</button>
-                <button name="remove">Убрать</button>
-            </li>
-        </ul>
-        
-        <form>
-            <span>Сумма: 3200 Руб.</span>
-            <button type="submit">Оплатить</button>
-        </form>
+        <main>
+            <ul class="cart-list">
+                <li class="cart-item">
+                    <span class="name">Партер Ряд 1 Место 2</span>
+                    <span class="price">1500 Руб.</span>
+                    <button forgeID="3544" class="btn-preview">Посмотреть</button>
+                    <button class="btn-remove">Убрать</button>
+                </li>
+                <li class="cart-item">
+                    <span class="name">Партер Ряд 7 Место 12</span>
+                    <span class="price">1500 Руб.</span>
+                    <button forgeID="2624" class="btn-preview">Посмотреть</button>
+                    <button class="btn-remove">Убрать</button>
+                </li>
+                <li class="cart-item">
+                    <span class="name">Партер Ряд 4 Место 21</span>
+                    <span class="price">1500 Руб.</span>
+                    <button forgeID="1584" class="btn-preview">Посмотреть</button>
+                    <button class="btn-remove">Убрать</button>
+                </li>
+            </ul>
 
-        <iframe src="build/index.html" width="800px" height="600px">
+            <form>
+                <span>Сумма: 4500 Руб.</span>
+                <button class="btn-pay" style="margin-left: 8px" type="submit">Оплатить</button>
+            </form>
+            <div class="modal">
+                <div class="modal-content">
+                    <button class="btn-close">&times;</button>
+                    <iframe src="build/index.html" width="500px" height="500px">
+                </div>
+            </div>
+        </main>
     </body>
-
-    <!-- jQuery -->
-    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-        crossorigin="anonymous"></script>
-
-    <!-- Scripts -->
-    <script src="script.js"></script>

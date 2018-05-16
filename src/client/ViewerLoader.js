@@ -35,7 +35,6 @@ function onViewableLoadSuccess(viewer, viewable) {
         sitOnPlace(viewer, forgeId);
     })
 }
-
 function onViewableLoadFail(errorCode) {
     throw ('onItemLoadFail() - errorCode:' + errorCode);
 }
