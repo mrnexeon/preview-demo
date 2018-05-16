@@ -13,13 +13,13 @@ app.use(express.static(publicFolder));
 app.get('/auth', function(req, res){   
     var oAuth2TwoLegged = new ForgeSDK.AuthClientTwoLegged(CLIENT_ID, CLIENT_SECRET, [
         'data:read',
-        'data:write'
+        'viewables:read'
     ], autoRefresh);
     
 	oAuth2TwoLegged.authenticate().then(function(credentials){
         res.send(credentials);
     }, function(err){
-        res.send("Нельзя зарегистрироваться");
+        res.send("Server error: unable to auth");
     });
 });
 
