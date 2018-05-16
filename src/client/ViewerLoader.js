@@ -1,4 +1,4 @@
-const urn = 'urn:dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6bW9kZWwyMDE4LTA0LTA2LTE5LTI3LTEyLWQ0MWQ4Y2Q5OGYwMGIyMDRlOTgwMDk5OGVjZjg0MjdlL2xhX21hcm1pdGVfXzEuc2tw';
+const urn = 'urn:dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6bW9kZWwyMDE4LTA1LTA1LTE3LTUxLTA4LWQ0MWQ4Y2Q5OGYwMGIyMDRlOTgwMDk5OGVjZjg0MjdlLzEyMy5za3A';
 const initialViewableIndex = 0;
 
 var viewerApp;
@@ -28,17 +28,18 @@ function onDocumentLoadSuccess(doc) {
 function onDocumentLoadFailure(viewerErrorCode) {
     throw ('onDocumentLoadFailure() - errorCode:' + viewerErrorCode);
 }
-
+/*
 function onEverythingLoaded(e) {
     viewerObserver.publish('VIEWER_TEXTURES_LOADED', e);
 }
+*/
 
 function onViewableLoadSuccess(viewer, viewable) {
-    viewerObserver.publish('VIEWER_LOADED', viewer);
+    viewerApp = viewer;
+    // viewerObserver.publish('VIEWER_LOADED', viewer);
 }
-
 function onViewableLoadFail(errorCode) {
     throw ('onItemLoadFail() - errorCode:' + errorCode);
 }
 
-export {load}
+export {load, viewerApp}
