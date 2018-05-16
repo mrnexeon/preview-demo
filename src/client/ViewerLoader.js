@@ -34,6 +34,10 @@ function onViewableLoadSuccess(viewer, viewable) {
         var forgeId = viewer.getSelection();
         sitOnPlace(viewer, forgeId);
     })
+    viewer.addEventListener(Autodesk.Viewing.TEXTURES_LOADED_EVENT, function() {
+        document.getElementById('preloader-modal').style.display = 'none';
+
+    })
 }
 function onViewableLoadFail(errorCode) {
     throw ('onItemLoadFail() - errorCode:' + errorCode);
