@@ -2,7 +2,7 @@ const urn = 'urn:dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6bW9kZWwyMDE4LTA1LTA1LTE3LTU
 const initialViewableIndex = 0;
 
 var viewerApp;
-var viewer;
+var delayedForgeId;
 
 function load(token) {
     var options = {
@@ -30,17 +30,18 @@ function onDocumentLoadFailure(viewerErrorCode) {
 }
 
 function onViewableLoadSuccess(viewer, viewable) {
-    viewer.addEventListener(Autodesk.Viewing.SELECTION_CHANGED_EVENT, function(){  
-        var forgeId = viewer.getSelection();
-        sitOnPlace(viewer, forgeId);
-    })
+    sitOnPlace(viewer, delayedForgeId);
     viewer.addEventListener(Autodesk.Viewing.TEXTURES_LOADED_EVENT, function() {
         document.getElementById('preloader-modal').style.display = 'none';
-
     })
 }
+
 function onViewableLoadFail(errorCode) {
     throw ('onItemLoadFail() - errorCode:' + errorCode);
+}
+
+function sitWhenLoaded(forgeId) {
+    delayedForgeId = forgeId;
 }
 
 function sitOnPlace(viewer, forgeId) {
@@ -79,4 +80,4 @@ function sitOnPlace(viewer, forgeId) {
     navTool.setWorldUpVector(up, true);
 }
 
-export {load}
+export {load, sitOnPlace, sitWhenLoaded, viewerApp}
