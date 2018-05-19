@@ -1,7 +1,9 @@
-import { load, sitOnPlace, sitWhenLoaded, viewerApp } from './ViewerLoader'
+import { load, sitOnPlace, sitWhenLoaded, viewerApp, setURLPlace } from './ViewerLoader'
 import './style.css'
+import { getSpecifiedElementIds } from './URL'
 
 $.getJSON('/auth', (data) => {
+    setURLPlace(getSpecifiedElementIds());
     load(data);
 })
 
