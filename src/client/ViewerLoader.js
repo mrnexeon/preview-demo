@@ -31,8 +31,6 @@ function onDocumentLoadFailure(viewerErrorCode) {
 }
 
 function onViewableLoadSuccess(viewer, viewable) {
-    console.log("By ULR" + URLPlace);
-    console.log("Delayed" + delayedForgeId);
     if (URLPlace)
     {
         sitOnPlace(viewer, URLPlace);
@@ -53,7 +51,6 @@ function sitWhenLoaded(forgeId) {
 }
 
 function setURLPlace(forgeId) {
-    console.log(URLPlace);
     URLPlace = forgeId;
 }
 
