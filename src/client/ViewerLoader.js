@@ -31,7 +31,7 @@ function onDocumentLoadFailure(viewerErrorCode) {
 }
 
 function onViewableLoadSuccess(viewer, viewable) {
-    if (URLPlace)
+    if (!!URLPlace)
     {
         sitOnPlace(viewer, URLPlace);
     } else {
