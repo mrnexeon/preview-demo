@@ -1,6 +1,5 @@
-node_modules/
 .DS_Store
-public/bundle.js
-public/place-only-demo/bundle.js
+node_modules/
+public/build/bundle.js
 .vscode/
 npm-debug.log

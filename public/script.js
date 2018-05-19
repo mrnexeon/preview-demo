@@ -9,6 +9,19 @@ function sendMessageToSit(){
 $(document).ready(() => {
     $('.btn-preview').click((event) => {
         forgeId = $(event.target).attr("forgeID");
+
+        document.getElementById('vk-share').innerHTML = VK.Share.button(
+            {
+                url: `http://127.0.0.1:8080/build/?place=${forgeId}`,
+                title: 'Я купил билет(ы) на спектакль "Сван" в Центре им. Вс. Мейерхольда с таким видом',
+                image: 'http://meyerhold.ru/wp-content/uploads/2015/10/24482661275_aee93118f5_z-600x400.jpg',
+                noparse: true
+            },
+            {
+                type: 'custom', 
+                text: '<img src="http://vk.com/images/vk32.png" />'
+            });
+
         var modal = document.getElementById("modal");
         modal.style.display = 'flex';
 
@@ -34,3 +47,4 @@ $(document).ready(() => {
 document.getElementsByClassName("btn-close")[0].addEventListener('click', function () {
     document.getElementById("modal").style.display = 'none';
 })
+

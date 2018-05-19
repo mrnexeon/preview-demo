@@ -99,6 +99,17 @@ button:hover {
     width: 42px;
 }
 
+#vk-share {
+    position: absolute;
+    right: 0;
+    top: 42;
+    vertical-align: middle;
+    text-align: center;
+    color: white;
+    height: 32px;
+    width: 32px;
+}
+
 #modal {
     position: fixed; /* Stay in place */
     z-index: 1; /* Sit on top */

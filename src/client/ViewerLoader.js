@@ -3,6 +3,7 @@ const initialViewableIndex = 0;
 
 var viewerApp;
 var delayedForgeId;
+var URLPlace;
 
 function load(token) {
     var options = {
@@ -30,7 +31,12 @@ function onDocumentLoadFailure(viewerErrorCode) {
 }
 
 function onViewableLoadSuccess(viewer, viewable) {
-    sitOnPlace(viewer, delayedForgeId);
+    if (!!URLPlace)
+    {
+        sitOnPlace(viewer, URLPlace);
+    } else {
+        sitOnPlace(viewer, delayedForgeId);
+    }
     viewer.addEventListener(Autodesk.Viewing.TEXTURES_LOADED_EVENT, function() {
         document.getElementById('preloader-modal').style.display = 'none';
     })
@@ -42,6 +48,10 @@ function onViewableLoadFail(errorCode) {
 
 function sitWhenLoaded(forgeId) {
     delayedForgeId = forgeId;
+}
+
+function setURLPlace(forgeId) {
+    URLPlace = forgeId;
 }
 
 function sitOnPlace(viewer, forgeId) {
@@ -80,4 +90,4 @@ function sitOnPlace(viewer, forgeId) {
     navTool.setWorldUpVector(up, true);
 }
 
-export {load, sitOnPlace, sitWhenLoaded, viewerApp}
+export {load, sitOnPlace, sitWhenLoaded, viewerApp, setURLPlace}
