@@ -86,30 +86,41 @@ button:hover {
     to { top:0; opacity:1 }
 }
 
-.btn-close {
+.modal-sidebar {
+    height: 100%;
     position: absolute;
     right: 0;
-    top: 0;
-    background: rgb(255, 64, 64);
+    top: 0; 
+}
+
+.btn-modal {
+    display: block;
     font-size: 1.3em;
     vertical-align: middle;
     text-align: center;
-    color: white;
-    height: 42px;
-    width: 42px;
+    height: 45px;
+    width: 45px;
 }
 
-#vk-share {
-    position: absolute;
-    right: 0;
-    top: 42;
-    vertical-align: middle;
-    text-align: center;
+.btn-close {
+    background: #e53935;
     color: white;
-    height: 32px;
-    width: 32px;
 }
 
+.btn-close:hover {
+    opacity: 1;
+    background: #d32f2f;
+}
+
+.btn-share {
+    background: #039be5;
+    color: white;
+
+}
+.btn-share:hover {
+    opacity: 1;
+    background: #0288d1;
+}
 #modal {
     position: fixed; /* Stay in place */
     z-index: 1; /* Sit on top */
