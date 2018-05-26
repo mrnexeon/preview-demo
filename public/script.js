@@ -1,5 +1,6 @@
 var viewerInitialized = false;
 var forgeId = 0;
+var placeName = "";
 
 function sendMessageToSit(){
     var targetWindow = document.getElementById("viewer").contentWindow;
@@ -9,11 +10,12 @@ function sendMessageToSit(){
 $(document).ready(() => {
     $('.btn-preview').click((event) => {
         forgeId = $(event.target).attr("forgeID");
+        placeName = $(event.target).attr("placeName");
 
         document.getElementById('vk-share').innerHTML = VK.Share.button(
             {
                 url: `http://127.0.0.1:8080/build/?place=${forgeId}`,
-                title: 'Я купил билет(ы) на спектакль "Сван" в Центре им. Вс. Мейерхольда с таким видом',
+                title: `Вид с места ${placeName}. Cпектакль "Сван" в Центре им. Вс. Мейерхольда`,
                 image: 'http://meyerhold.ru/wp-content/uploads/2015/10/24482661275_aee93118f5_z-600x400.jpg',
                 noparse: true
             },
