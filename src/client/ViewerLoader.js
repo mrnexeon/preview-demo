@@ -2,7 +2,8 @@ const urn = 'urn:dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6bW9kZWwyMDE4LTA1LTA1LTE3LTU
 const initialViewableIndex = 0;
 
 var viewerApp;
-var viewerObserver;
+var delayedForgeId;
+var URLPlace;
 
 function load(token) {
     var options = {
@@ -28,18 +29,65 @@ function onDocumentLoadSuccess(doc) {
 function onDocumentLoadFailure(viewerErrorCode) {
     throw ('onDocumentLoadFailure() - errorCode:' + viewerErrorCode);
 }
-/*
-function onEverythingLoaded(e) {
-    viewerObserver.publish('VIEWER_TEXTURES_LOADED', e);
-}
-*/
 
 function onViewableLoadSuccess(viewer, viewable) {
-    viewerApp = viewer;
-    // viewerObserver.publish('VIEWER_LOADED', viewer);
+    if (!!URLPlace)
+    {
+        sitOnPlace(viewer, URLPlace);
+    } else {
+        sitOnPlace(viewer, delayedForgeId);
+    }
+    viewer.addEventListener(Autodesk.Viewing.TEXTURES_LOADED_EVENT, function() {
+        document.getElementById('preloader-modal').style.display = 'none';
+    })
 }
+
 function onViewableLoadFail(errorCode) {
     throw ('onItemLoadFail() - errorCode:' + errorCode);
 }
 
-export {load, viewerApp}
+function sitWhenLoaded(forgeId) {
+    delayedForgeId = forgeId;
+}
+
+function setURLPlace(forgeId) {
+    URLPlace = forgeId;
+}
+
+function sitOnPlace(viewer, forgeId) {
+    var item = viewer.impl.model.getData().fragments.fragId2dbId.indexOf(parseInt(forgeId));
+    if (item == -1) return;
+
+    var fragbBox = new THREE.Box3();
+    var nodebBox = new THREE.Box3();
+
+    [item].forEach(function (fragId) {
+        viewer.model.getFragmentList().getWorldBounds(fragId, fragbBox);
+        nodebBox.union(fragbBox);
+    });
+
+    var bBox = nodebBox;
+
+    var camera = viewer.getCamera();
+    var navTool = new Autodesk.Viewing.Navigation(camera);
+    navTool.toPerspective();
+
+    var position = bBox.max;
+    position.x -= 0.5;
+    position.y -= 0.25;
+
+    var pivPointPosition = JSON.parse(JSON.stringify(position));
+    pivPointPosition.z -= 0.1
+    navTool.setPivotPoint(pivPointPosition);
+    navTool.setPivotSetFlag(true);
+    viewer.setUsePivotAlways(true);
+    navTool.setVerticalFov(70, true);
+
+    var target = new THREE.Vector3(-7, 2, -10.5);
+    var up = new THREE.Vector3(0, 0, 1);
+
+    navTool.setView(position, target);
+    navTool.setWorldUpVector(up, true);
+}
+
+export {load, sitOnPlace, sitWhenLoaded, viewerApp, setURLPlace}
