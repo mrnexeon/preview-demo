@@ -4,7 +4,7 @@ var placeName = "";
 
 function sendMessageToSit(){
     var targetWindow = document.getElementById("viewer").contentWindow;
-    targetWindow.postMessage(forgeId, "http://localhost:8080");
+    targetWindow.postMessage(forgeId, "https://mighty-tor-84045.herokuapp.com");
 }
 
 $(document).ready(() => {
@@ -14,7 +14,7 @@ $(document).ready(() => {
 
         document.getElementById('vk-share').innerHTML = VK.Share.button(
             {
-                url: `http://127.0.0.1:8080/build/?place=${forgeId}`,
+                url: `https://mighty-tor-84045.herokuapp.com/build/?place=${forgeId}`,
                 title: `Вид с места ${placeName}. Cпектакль "Сван" в Центре им. Вс. Мейерхольда`,
                 image: 'http://meyerhold.ru/wp-content/uploads/2015/10/24482661275_aee93118f5_z-600x400.jpg',
                 noparse: true
