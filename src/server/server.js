@@ -2,7 +2,7 @@ var express = require('express');
 var ForgeSDK = require('forge-apis');
 
 var app = express(); 
-var port = 8080; 
+var port = process.env.PORT || 8080; 
 var CLIENT_ID = '7CMZFMmL22BaEhZSp0Uel052iL5aussd';
 var CLIENT_SECRET = 'RnRA7ThEt0DGPAsK';
 var autoRefresh = true; 
