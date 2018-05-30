@@ -1,4 +1,4 @@
-const elementsIds = (function() {
+const placeId = (function() {
     var match = window.location.href.match(/place=([\d]+)/);
     if (match !== null) {
         return parseInt(match[1]);
@@ -14,7 +14,7 @@ const eventId = (function() {
     return NaN;
 })();
 
-function getSpecifiedElementIds(str) {
+function getSpecifiedPlaceId(str) {
     if (!!str) {
         var match = str.match(/place=([\d]+)/);
         if (match !== null) {
@@ -22,7 +22,7 @@ function getSpecifiedElementIds(str) {
         }
         return NaN;
     }
-    return elementsIds;
+    return placeId;
 }
 
 function getSpecifiedEvent(str) {
@@ -37,7 +37,7 @@ function getSpecifiedEvent(str) {
 }
 
 export {
-    getSpecifiedElementIds,
+    getSpecifiedPlaceId,
     getSpecifiedEvent
 };
 

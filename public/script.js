@@ -42,7 +42,7 @@ $(document).ready(() => {
             },
             {
                 type: 'custom', 
-                text: '<img src="http://vk.com/images/vk32.png" />'
+                text: '<i class="material-icons" style="color: white">share</i>'
             });
 
         var modal = document.getElementById("modal");

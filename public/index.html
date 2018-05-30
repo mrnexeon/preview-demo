@@ -2,12 +2,11 @@
 
     <head>
         <title>Preview Demo</title>
-
-        <!-- VK -->
-        <script type="text/javascript" src="https://vk.com/js/api/share.js?93" charset="windows-1251"></script>
         
         <!-- Style -->
         <link rel="stylesheet" href="style.css">
+        <!-- Material Icons -->
+        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     </head>
 
     <body>
@@ -52,12 +51,16 @@
             </form>
             <div id="modal">
                 <div class="modal-content">
-                    <button class="btn-close">&times;</button>
-                    <div id="vk-share"></div>
+                    <div class="modal-sidebar">
+                        <button class="btn-modal btn-close"><i class="material-icons">close</i></button>
+                        <button class="btn-modal btn-share" id="vk-share"></button>
+                    </div>
                 </div>
             </div>
         </main>
-        
+
+        <!-- VK -->
+        <script type="text/javascript" src="https://vk.com/js/api/share.js?93" charset="windows-1251"></script>
         <!-- jQuery -->
         <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
             crossorigin="anonymous"></script>
