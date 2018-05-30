@@ -1,18 +1,23 @@
-import { load, sitOnPlace, sitWhenLoaded, viewerApp, setURLPlace } from './ViewerLoader'
+import { load, sitOnPlace, sitWhenLoaded, viewerApp, setURLData } from './ViewerLoader'
 import './style.css'
-import { getSpecifiedElementIds } from './URL'
+import { getSpecifiedElementIds, getSpecifiedEvent } from './URL'
+
+var forgeId;
+var eventId;
 
 $.getJSON('/auth', (data) => {
-    setURLPlace(getSpecifiedElementIds());
-    load(data);
+    setURLData(getSpecifiedEvent(), getSpecifiedElementIds());
+    eventId = !!eventId ? eventId : getSpecifiedEvent();
+    load(data, eventId);
 })
 
 window.addEventListener("message", function(event){
-    var forgeId = parseInt(event.data);
+    forgeId = getSpecifiedElementIds(event.data);
+    eventId = getSpecifiedEvent(event.data);
     if (!viewerApp)
     {
-        sitWhenLoaded(forgeId);
+        sitWhenLoaded(eventId, forgeId);
     } else {
-        sitOnPlace(viewerApp.getCurrentViewer(), forgeId);
+        sitOnPlace(forgeId);
     }
 }, false);

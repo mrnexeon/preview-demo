@@ -2,12 +2,11 @@
 
     <head>
         <title>Preview Demo</title>
-
-        <!-- VK -->
-        <script type="text/javascript" src="https://vk.com/js/api/share.js?93" charset="windows-1251"></script>
         
         <!-- Style -->
         <link rel="stylesheet" href="style.css">
+        <!-- Material Icons -->
+        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     </head>
 
     <body>
@@ -23,25 +22,24 @@
             </li>
         </ul>
 
-        <img src="site.jpg" width="100%"/>
         <main>
             <ul class="cart-list">
                 <li class="cart-item">
-                    <span class="name">Партер Ряд 3 Место 12</span>
+                    <span class="name">Партер Ряд 3 Место 4</span>
                     <span class="price">1500 Руб.</span>
-                    <button event="1" placeName="Партер Ряд 3 Место 12" forgeID="3140" class="btn-preview">Посмотреть</button>
+                    <button event="3" placeName="Партер Ряд 3 Место 4" forgeID="2900" class="btn-preview">Посмотреть</button>
                     <button class="btn-remove">Убрать</button>
                 </li>
                 <li class="cart-item">
-                    <span class="name">Партер Ряд 8 Место 12</span>
+                    <span class="name">Партер Ряд 8 Место 16</span>
                     <span class="price">1500 Руб.</span>
-                    <button event="1" placeName="Партер Ряд 8 Место 12" forgeID="2620" class="btn-preview">Посмотреть</button>
+                    <button event="3" placeName="Партер Ряд 8 Место 16" forgeID="1260" class="btn-preview">Посмотреть</button>
                     <button class="btn-remove">Убрать</button>
                 </li>
                 <li class="cart-item">
-                    <span class="name">Партер Ряд 4 Место 18</span>
+                    <span class="name">Партер Ряд 5 Место 25</span>
                     <span class="price">1500 Руб.</span>
-                    <button event="1" placeName="Партер Ряд 4 Место 18" forgeID="1020" class="btn-preview">Посмотреть</button>
+                    <button event="3" placeName="Партер Ряд 5 Место 25" forgeID="1340" class="btn-preview">Посмотреть</button>
                     <button class="btn-remove">Убрать</button>
                 </li>
             </ul>
@@ -52,12 +50,16 @@
             </form>
             <div id="modal">
                 <div class="modal-content">
-                    <button class="btn-close">&times;</button>
-                    <div id="vk-share"></div>
+                    <div class="modal-sidebar">
+                        <button class="btn-modal btn-close"><i class="material-icons">close</i></button>
+                        <button class="btn-modal btn-share" id="vk-share"></button>
+                    </div>
                 </div>
             </div>
         </main>
-        
+
+        <!-- VK -->
+        <script type="text/javascript" src="https://vk.com/js/api/share.js?93" charset="windows-1251"></script>
         <!-- jQuery -->
         <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
             crossorigin="anonymous"></script>
