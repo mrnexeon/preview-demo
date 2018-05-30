@@ -8,7 +8,6 @@ var viewerApp;
 var delayedForgeId;
 var delayedEventId;
 var URLPlace;
-var URLEvent;
 var seatsPath;
 
 var viewerMain;
@@ -94,11 +93,8 @@ function sitWhenLoaded(eventId, forgeId) {
     delayedForgeId = forgeId;
 }
 
-function setURLData(eventId, forgeId) {
-    if (!!eventId) {
-        URLEvent = eventId;
-        URLPlace = forgeId;
-    }
+function rememberSpecifiedPlace(forgeId) {
+    URLPlace = forgeId;
 }
 
 function sitOnPlace(forgeId) {
@@ -138,4 +134,4 @@ function sitOnPlace(forgeId) {
     navTool.setWorldUpVector(up, true);
 }
 
-export {load, sitOnPlace, sitWhenLoaded, viewerApp, setURLData}
+export {load, sitOnPlace, sitWhenLoaded, viewerApp, rememberSpecifiedPlace}
