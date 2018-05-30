@@ -1,28 +1,22 @@
 import './style.css'
-import { load, sitOnPlace, sitWhenLoaded, viewerApp, rememberSpecifiedPlace } from './ViewerLoader'
-import { getSpecifiedPlaceId, getSpecifiedEvent } from './URL'
+import { load, sitWhenReady } from './ViewerLoader'
+import { getSpecifiedPlaceId, getSpecifiedEventId } from './stringParser'
 
 $.getJSON('/auth', (data) => {
+    var specifiedEvent = getSpecifiedEventId();
     var specifiedPlace = getSpecifiedPlaceId();
-    var specifiedEvent = getSpecifiedEvent();
     var isFullscreen = !!specifiedPlace && !!specifiedEvent;
 
-    rememberSpecifiedPlace(specifiedPlace);
     var eventId = isFullscreen ? specifiedEvent : onMessageRecieved.eventId;
+    var placeId = isFullscreen ? specifiedPlace : onMessageRecieved.forgeId;
 
-    load(data, eventId);
+    load(data, eventId, placeId);
 })
 
 var onMessageRecieved = (event) => {
-    var forgeId = getSpecifiedPlaceId(event.data);
-    onMessageRecieved.eventId = getSpecifiedEvent(event.data);
-
-    if (!viewerApp)
-    {
-        sitWhenLoaded(onMessageRecieved.eventId, forgeId);
-    } else {
-        sitOnPlace(forgeId);
-    }
+    onMessageRecieved.forgeId = getSpecifiedPlaceId(event.data);
+    onMessageRecieved.eventId = getSpecifiedEventId(event.data);
+    sitWhenReady(onMessageRecieved.forgeId);
 }
 
 window.addEventListener("message", onMessageRecieved, false);
