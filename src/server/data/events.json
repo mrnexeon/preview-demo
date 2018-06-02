@@ -1,0 +1,26 @@
+[
+    {
+        "id": 1,
+        "name": "Сван",
+        "seatsUrn": "urn:dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6bW9kZWwyMDE4LTA1LTI1LTE4LTM1LTI1LWQ0MWQ4Y2Q5OGYwMGIyMDRlOTgwMDk5OGVjZjg0MjdlL3N3YW4uc2tw",
+        "description": "Описание спектакля 'Сван'",
+        "photoUrl": "http://meyerhold.ru/wp-content/uploads/2015/10/24482661275_aee93118f5_z-600x400.jpg",
+        "officialPageLink": "http://meyerhold.ru/swan/"
+    },
+    {
+        "id": 2,
+        "name": "Фро",
+        "seatsUrn": "urn:dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6bW9kZWwyMDE4LTA1LTI1LTE5LTE2LTM1LWQ0MWQ4Y2Q5OGYwMGIyMDRlOTgwMDk5OGVjZjg0MjdlL0Zyby5za3A",
+        "description": "Описание спектакля 'Фро'",
+        "photoUrl": "http://meyerhold.ru/wp-content/uploads/2017/02/FRO-FB-03-450x215.png",
+        "officialPageLink": "http://meyerhold.ru/fro/"
+    },
+    {
+        "id": 3,
+        "name": "Страна Москва",
+        "seatsUrn": "urn:dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6bW9kZWwyMDE4LTA1LTI1LTE4LTM5LTQzLWQ0MWQ4Y2Q5OGYwMGIyMDRlOTgwMDk5OGVjZjg0MjdlL01vc2t2YS5za3A",
+        "description": "Описание спектакля 'Страна Москва'",
+        "photoUrl": "http://meyerhold.ru/wp-content/uploads/2015/12/Strana-Moskva-Kraeva-101-450x215.jpg",
+        "officialPageLink": "http://meyerhold.ru/strana-moskva/"
+    }
+]
