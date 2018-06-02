@@ -56,6 +56,9 @@ var startLoadingEvent = (eventId) => {
 var setDescriptionInfo = (info) => {
     document.getElementById('event-name').innerHTML = info.name;
     document.getElementById('event-photo').src = info.photoUrl;
+    document.getElementById('event-creator').innerHTML = info.creator;
+    document.getElementById('event-duration').innerHTML = info.duration;
+    document.getElementById('event-age-rating').innerHTML = info.ageRating;
     document.getElementById('event-description').innerHTML = info.description;
     document.getElementById('event-official-page-link').href = info.officialPageLink;
 }
