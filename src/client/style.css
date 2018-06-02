@@ -2,9 +2,24 @@ body {
     margin: 0;
 }
 
-#viewer {
-    width: 100%;
+#event-photo {
+    width: 80%;
+}
+
+#container {
+    width: 100%; 
+    overflow: hidden;
+}
+
+#event-info {
+    width: 20%; 
     height: 100%;
+    float: left;
+    background-color: aliceblue;
+}
+
+#viewer {
+    margin-left: 20%;
 }
 
 .preloader-spinner {
