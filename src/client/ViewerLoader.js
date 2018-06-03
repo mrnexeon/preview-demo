@@ -1,76 +1,68 @@
-const roomUrn = 'urn:dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6bW9kZWwyMDE4LTA1LTI1LTE3LTM5LTQxLWQ0MWQ4Y2Q5OGYwMGIyMDRlOTgwMDk5OGVjZjg0MjdlL3Jvb20uc2tw';
-const seatsSwanUrn = 'urn:dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6bW9kZWwyMDE4LTA1LTI1LTE4LTM1LTI1LWQ0MWQ4Y2Q5OGYwMGIyMDRlOTgwMDk5OGVjZjg0MjdlL3N3YW4uc2tw';
-const seatsFroUrn = 'urn:dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6bW9kZWwyMDE4LTA1LTI1LTE5LTE2LTM1LWQ0MWQ4Y2Q5OGYwMGIyMDRlOTgwMDk5OGVjZjg0MjdlL0Zyby5za3A';
-const seatsMoscowUrn = 'urn:dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6bW9kZWwyMDE4LTA1LTI1LTE4LTM5LTQzLWQ0MWQ4Y2Q5OGYwMGIyMDRlOTgwMDk5OGVjZjg0MjdlL01vc2t2YS5za3A';
-const initialViewableIndex = 0;
-
-const targetVector = new THREE.Vector3(-703, 2, -1054);
-const upVector = new THREE.Vector3(0, 0, 1);
-const positionXOffset = 0;
-const positionYOffset = -25;
-const positionZOffset = 40;
-const pivotZOffset = 20;
-
 var savedPlaceId;
+var savedEventId;
 var seatsPath;
 
 var viewerApp;
 var viewerMain;
 var seatsModel;
+var areaSettings;
 
 var load = (token, eventId, placeId) => {
     savedPlaceId = placeId;
+    savedEventId = eventId;
     var options = {
         env: 'AutodeskProduction',
         accessToken: token.access_token
     };
     
-    Autodesk.Viewing.Initializer(options, function onInitialized() {
-        viewerApp = new Autodesk.Viewing.ViewingApplication('viewer');
-        viewerApp.registerViewer(viewerApp.k3D, Autodesk.Viewing.Viewer3D);
-        viewerApp.loadDocument(roomUrn, onDocumentLoadSuccess, onDocumentLoadFailure);
-        startLoadingSeats(eventId);
-    })
-}
-
-var startLoadingSeats = (eventId) => {
-    var seatsUrn;
-    switch(eventId) {
-        case 1:
-            seatsUrn = seatsSwanUrn;
-            break;
-        case 2:
-            seatsUrn = seatsFroUrn;
-            break;
-        case 3:
-            seatsUrn = seatsMoscowUrn;
-            break;
-        default:
-            seatsUrn = null;
-            break;
-    }
-    Autodesk.Viewing.Document.load(seatsUrn, (document) => {
-        var geometryItems3d = Autodesk.Viewing.Document.
-            getSubItemsWithProperties(document.getRootItem(), 
-            {
-                'type': 'geometry',
-                'role': '3d' 
-            }, true);
-        seatsPath = document.getViewablePath(geometryItems3d[0]);
+    $.getJSON(`/getAreaData`, (data) => {
+        areaSettings = data;
+        Autodesk.Viewing.Initializer(options, function onInitialized() {
+            viewerApp = new Autodesk.Viewing.ViewingApplication('viewer');
+            viewerApp.registerViewer(viewerApp.k3D, Autodesk.Viewing.Viewer3D);
+            viewerApp.loadDocument(areaSettings.areaUrn, onDocumentLoadSuccess, onLoadFail);
+        })
     });
 }
 
+var onLoadFail = (errorCode, errorMessage, statusCode, statusText) => {
+    throw ($`onLoadFail(): ${errorMessage}`);
+}
+
 var onDocumentLoadSuccess = (doc) => {
+    startLoadingEvent(savedEventId);
     let loadingData = viewerApp.bubble.search({'type':'geometry'});
     if (loadingData.length === 0) {
         throw 'Document contains no viewables';
     }
-    viewerApp.selectItem(loadingData[initialViewableIndex].data, onRoomLoadSuccess, onLoadFail);
+    viewerApp.selectItem(loadingData[areaSettings.initialViewableIndex].data, onRoomLoadSuccess, onLoadFail);
 }
 
-var onDocumentLoadFailure = (viewerErrorCode) => {
-    throw ('onDocumentLoadFailure() - errorCode:' + viewerErrorCode);
+var startLoadingEvent = (eventId) => {
+    $.getJSON(`/getEventData`, { eventId: eventId }, (data) => {
+        Autodesk.Viewing.Document.load(data.seatsUrn, (document) => {
+            var geometryItems3d = Autodesk.Viewing.Document.
+                getSubItemsWithProperties(document.getRootItem(), 
+                {
+                    'type': 'geometry',
+                    'role': '3d' 
+                }, true);
+            seatsPath = document.getViewablePath(geometryItems3d[0]);
+        });
+        setDescriptionInfo(data);
+    })
 }
+
+var setDescriptionInfo = (info) => {
+    document.getElementById('event-name').innerHTML = info.name;
+    document.getElementById('event-photo').src = info.photoUrl;
+    document.getElementById('event-creator').innerHTML = info.creator;
+    document.getElementById('event-duration').innerHTML = info.duration;
+    document.getElementById('event-age-rating').innerHTML = info.ageRating;
+    document.getElementById('event-description').innerHTML = info.description;
+    document.getElementById('event-official-page-link').href = info.officialPageLink;
+}
+
 
 var onRoomLoadSuccess = (viewer, viewable) => {
     viewer.addEventListener(Autodesk.Viewing.GEOMETRY_LOADED_EVENT, onRoomGeometryLoaded);
@@ -90,10 +82,6 @@ var onSeatsLoadSuccess = (model) => {
     seatsModel = model;
     sitOnPlace(savedPlaceId);
     document.getElementById('preloader-modal').style.display = 'none';
-}
-
-var onLoadFail = (errorCode, errorMessage, statusCode, statusText) => {
-    throw ($`onLoadFail(): ${errorMessage}`);
 }
 
 var sitWhenReady = (placeId) => {
@@ -116,29 +104,26 @@ var sitOnPlace = (placeId) => {
         nodebBox.union(fragbBox);
     });
 
-    var bBox = nodebBox;
+    var position = nodebBox.max;
+    position.x += areaSettings.cameraSettings.positionXOffset;
+    position.y += areaSettings.cameraSettings.positionYOffset;
+    position.z += areaSettings.cameraSettings.positionZOffset;
 
     var camera = viewerMain.getCamera();
     var navTool = new Autodesk.Viewing.Navigation(camera);
     navTool.toPerspective();
 
-    var position = bBox.max;
-    position.y += positionXOffset;
-    position.y += positionYOffset;
-    position.z += positionZOffset;
-
     var pivPointPosition = JSON.parse(JSON.stringify(position));
-    pivPointPosition.z -= pivotZOffset;
+    pivPointPosition.z -= areaSettings.cameraSettings.pivotZOffset;
     navTool.setPivotPoint(pivPointPosition);
     navTool.setPivotSetFlag(true);
     viewerMain.setUsePivotAlways(true);
-    navTool.setVerticalFov(70, true);
+    navTool.setVerticalFov(areaSettings.cameraSettings.FOV, true);
 
-    var target = targetVector;
-    var up = upVector;
-
-    navTool.setView(position, target);
-    navTool.setWorldUpVector(up, true);
+    var targetVector = areaSettings.cameraSettings.targetVector;
+    navTool.setView(position, new THREE.Vector3(targetVector.x, targetVector.y, targetVector.z));
+    var upVector = areaSettings.cameraSettings.upVector;
+    navTool.setWorldUpVector(new THREE.Vector3(upVector.x, upVector.y, upVector.z), true);
 }
 
 export { load, sitWhenReady }
