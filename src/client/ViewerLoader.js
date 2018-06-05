@@ -1,93 +1,129 @@
-const urn = 'urn:dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6bW9kZWwyMDE4LTA1LTA1LTE3LTUxLTA4LWQ0MWQ4Y2Q5OGYwMGIyMDRlOTgwMDk5OGVjZjg0MjdlLzEyMy5za3A';
-const initialViewableIndex = 0;
+var savedPlaceId;
+var savedEventId;
+var seatsPath;
 
 var viewerApp;
-var delayedForgeId;
-var URLPlace;
+var viewerMain;
+var seatsModel;
+var areaSettings;
 
-function load(token) {
+var load = (token, eventId, placeId) => {
+    savedPlaceId = placeId;
+    savedEventId = eventId;
     var options = {
         env: 'AutodeskProduction',
         accessToken: token.access_token
     };
     
-    Autodesk.Viewing.Initializer(options, function onInitialized() {
-        viewerApp = new Autodesk.Viewing.ViewingApplication('viewer');
-        viewerApp.registerViewer(viewerApp.k3D, Autodesk.Viewing.Viewer3D);
-        viewerApp.loadDocument(urn, onDocumentLoadSuccess, onDocumentLoadFailure);
+    $.getJSON(`/getAreaData`, (data) => {
+        areaSettings = data;
+        Autodesk.Viewing.Initializer(options, function onInitialized() {
+            viewerApp = new Autodesk.Viewing.ViewingApplication('viewer');
+            viewerApp.registerViewer(viewerApp.k3D, Autodesk.Viewing.Viewer3D);
+            viewerApp.loadDocument(areaSettings.areaUrn, onDocumentLoadSuccess, onLoadFail);
+        })
     });
 }
 
-function onDocumentLoadSuccess(doc) {
+var onLoadFail = (errorCode, errorMessage, statusCode, statusText) => {
+    throw ($`onLoadFail(): ${errorMessage}`);
+}
+
+var onDocumentLoadSuccess = (doc) => {
+    startLoadingEvent(savedEventId);
     let loadingData = viewerApp.bubble.search({'type':'geometry'});
     if (loadingData.length === 0) {
         throw 'Document contains no viewables';
     }
-    viewerApp.selectItem(loadingData[initialViewableIndex].data, onViewableLoadSuccess, onViewableLoadFail);
+    viewerApp.selectItem(loadingData[areaSettings.initialViewableIndex].data, onRoomLoadSuccess, onLoadFail);
 }
 
-function onDocumentLoadFailure(viewerErrorCode) {
-    throw ('onDocumentLoadFailure() - errorCode:' + viewerErrorCode);
-}
-
-function onViewableLoadSuccess(viewer, viewable) {
-    if (!!URLPlace)
-    {
-        sitOnPlace(viewer, URLPlace);
-    } else {
-        sitOnPlace(viewer, delayedForgeId);
-    }
-    viewer.addEventListener(Autodesk.Viewing.TEXTURES_LOADED_EVENT, function() {
-        document.getElementById('preloader-modal').style.display = 'none';
+var startLoadingEvent = (eventId) => {
+    $.getJSON(`/getEventData`, { eventId: eventId }, (data) => {
+        Autodesk.Viewing.Document.load(data.seatsUrn, (document) => {
+            var geometryItems3d = Autodesk.Viewing.Document.
+                getSubItemsWithProperties(document.getRootItem(), 
+                {
+                    'type': 'geometry',
+                    'role': '3d' 
+                }, true);
+            seatsPath = document.getViewablePath(geometryItems3d[0]);
+        });
+        setDescriptionInfo(data);
     })
 }
 
-function onViewableLoadFail(errorCode) {
-    throw ('onItemLoadFail() - errorCode:' + errorCode);
+var setDescriptionInfo = (info) => {
+    document.getElementById('event-name').innerHTML = info.name;
+    document.getElementById('event-photo').src = info.photoUrl;
+    document.getElementById('event-creator').innerHTML = info.creator;
+    document.getElementById('event-duration').innerHTML = info.duration;
+    document.getElementById('event-age-rating').innerHTML = info.ageRating;
+    document.getElementById('event-description').innerHTML = info.description;
+    document.getElementById('event-official-page-link').href = info.officialPageLink;
 }
 
-function sitWhenLoaded(forgeId) {
-    delayedForgeId = forgeId;
+
+var onRoomLoadSuccess = (viewer, viewable) => {
+    viewer.addEventListener(Autodesk.Viewing.GEOMETRY_LOADED_EVENT, onRoomGeometryLoaded);
+    viewer.addEventListener(Autodesk.Viewing.SELECTION_CHANGED_EVENT, function(){
+        alert(viewer.getSelection());
+    });
+    viewerMain = viewer;
 }
 
-function setURLPlace(forgeId) {
-    URLPlace = forgeId;
+var onRoomGeometryLoaded = (event) => {
+    event.target.loadModel(seatsPath, { globalOffset: event.model.getData().globalOffset }, onSeatsLoadSuccess, onLoadFail);
+    event.target.removeEventListener(Autodesk.Viewing.GEOMETRY_LOADED_EVENT, onRoomGeometryLoaded);
 }
 
-function sitOnPlace(viewer, forgeId) {
-    var item = viewer.impl.model.getData().fragments.fragId2dbId.indexOf(parseInt(forgeId));
+var onSeatsLoadSuccess = (model) => {
+    model.setAllVisibility(true);
+    seatsModel = model;
+    sitOnPlace(savedPlaceId);
+    document.getElementById('preloader-modal').style.display = 'none';
+}
+
+var sitWhenReady = (placeId) => {
+    if (!viewerApp) {
+        savedPlaceId = placeId;
+    } else {
+        sitOnPlace(placeId);
+    }
+}
+
+var sitOnPlace = (placeId) => {
+    var item = seatsModel.getData().fragments.fragId2dbId.indexOf(parseInt(placeId));
     if (item == -1) return;
 
     var fragbBox = new THREE.Box3();
     var nodebBox = new THREE.Box3();
 
     [item].forEach(function (fragId) {
-        viewer.model.getFragmentList().getWorldBounds(fragId, fragbBox);
+        seatsModel.getFragmentList().getWorldBounds(fragId, fragbBox);
         nodebBox.union(fragbBox);
     });
 
-    var bBox = nodebBox;
+    var position = nodebBox.max;
+    position.x += areaSettings.cameraSettings.positionXOffset;
+    position.y += areaSettings.cameraSettings.positionYOffset;
+    position.z += areaSettings.cameraSettings.positionZOffset;
 
-    var camera = viewer.getCamera();
+    var camera = viewerMain.getCamera();
     var navTool = new Autodesk.Viewing.Navigation(camera);
     navTool.toPerspective();
 
-    var position = bBox.max;
-    position.x -= 0.5;
-    position.y -= 0.25;
-
     var pivPointPosition = JSON.parse(JSON.stringify(position));
-    pivPointPosition.z -= 0.1
+    pivPointPosition.z -= areaSettings.cameraSettings.pivotZOffset;
     navTool.setPivotPoint(pivPointPosition);
     navTool.setPivotSetFlag(true);
-    viewer.setUsePivotAlways(true);
-    navTool.setVerticalFov(70, true);
+    viewerMain.setUsePivotAlways(true);
+    navTool.setVerticalFov(areaSettings.cameraSettings.FOV, true);
 
-    var target = new THREE.Vector3(-7, 2, -10.5);
-    var up = new THREE.Vector3(0, 0, 1);
-
-    navTool.setView(position, target);
-    navTool.setWorldUpVector(up, true);
+    var targetVector = areaSettings.cameraSettings.targetVector;
+    navTool.setView(position, new THREE.Vector3(targetVector.x, targetVector.y, targetVector.z));
+    var upVector = areaSettings.cameraSettings.upVector;
+    navTool.setWorldUpVector(new THREE.Vector3(upVector.x, upVector.y, upVector.z), true);
 }
 
-export {load, sitOnPlace, sitWhenLoaded, viewerApp, setURLPlace}
+export { load, sitWhenReady }
