@@ -13,13 +13,13 @@ $('#event-switcher').change(function () {
 
     switch (val) {
         case "Сван":
-            $('.cart-list').load('events/svan.html');
+        window.location.href = 'index.html';
             break;
         case "Фро":
-            $('.cart-list').load('events/fro.html');
+        window.location.href = 'fro.html';
             break;
         case "Страна Москва":
-            $('.cart-list').load('events/moscow.html');
+        window.location.href = 'moscow.html';
             break;
     }
 });
