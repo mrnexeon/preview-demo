@@ -2,7 +2,7 @@
 
     <head>
         <title>Preview Demo</title>
-        
+
         <!-- Style -->
         <link rel="stylesheet" href="style.css">
         <!-- Material Icons -->
@@ -10,19 +10,15 @@
     </head>
 
     <body>
-        <ul class="event-list">
-            <li class="event-item">
-                <a href="index.html">Сван</a>
-            </li>
-            <li class="event-item">
-                <a href="fro.html">Фро</a>
-            </li>
-            <li class="event-item">
-                <a href="moscow.html">Страна Москва</a>
-            </li>
-        </ul>
+        <div id="headbar">
+        <select id="event-switcher">
+            <option>Сван</option>
+            <option>Фро</option>
+            <option>Страна Москва</option>
+        </select>
+        </div>
 
-        <img src="site.jpg" width="100%"/>
+        <img src="site.jpg" width="100%" />
         <main>
             <ul class="cart-list">
                 <li class="cart-item">
@@ -52,7 +48,9 @@
             <div id="modal">
                 <div class="modal-content">
                     <div class="modal-sidebar">
-                        <button class="btn-modal btn-close"><i class="material-icons">close</i></button>
+                        <button class="btn-modal btn-close">
+                            <i class="material-icons">close</i>
+                        </button>
                         <button class="btn-modal btn-share" id="vk-share"></button>
                     </div>
                 </div>
