@@ -23,6 +23,7 @@
   },
   "devDependencies": {
     "css-loader": "^0.28.11",
+    "jsonq": "^1.1.0",
     "nodemon": "^1.17.3",
     "style-loader": "^0.21.0",
     "webpack": "^4.6.0",

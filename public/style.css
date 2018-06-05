@@ -10,6 +10,14 @@ main {
     margin: 0 auto;
 }
 
+#headbar {
+    width: 100%;
+    padding: 12px;
+    position: fixed;
+    background: rgba(0, 0, 0, .2);
+
+}
+
 iframe {
     border: none;
 }
